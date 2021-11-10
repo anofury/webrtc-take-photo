@@ -5,7 +5,8 @@ window.addEventListener("load", function () {
         wrapper3 = document.querySelector(".wrapper-3");
     var openMediaDOM = this.document.querySelector("#openMedia");
     var localVideoDOM = document.querySelector("#localVideo"),
-        exitVideoDOM = this.document.querySelector("#exitVideo"),
+        exitVideoDOM = document.querySelector("#exitVideo"),
+        playVideoDOM = document.querySelector("#playVideo"),
         showPicDOM = document.querySelector("#showPic"),
         takePhotoDOM = document.querySelector("#takePhoto"),
         switchCameraDOM = document.querySelector("#switchCamera");
@@ -29,6 +30,16 @@ window.addEventListener("load", function () {
     localVideoDOM.addEventListener("canplay", function () {
         canvasDOM.setAttribute("width", localVideoDOM.videoWidth);
         canvasDOM.setAttribute("height", localVideoDOM.videoHeight);
+        localVideoDOM.play().catch(function(err) {
+            // 当前浏览器不支持自动播放
+            console.log(err);
+            playVideoDOM.style.display = 'block';
+        });
+    }, false);
+
+    playVideoDOM.addEventListener("click", function () {
+        localVideoDOM.play();
+        playVideoDOM.style.display = 'none';
     }, false);
 
     exitVideoDOM.addEventListener("click", function () {
